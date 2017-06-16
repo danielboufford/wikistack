@@ -4,12 +4,20 @@ const bodyParser = require('body-parser');
 const nunjucks = require('nunjucks');
 const sequelize = require('sequelize');
 const routes = require('./routes');
-
 var models = require('./models');
 
 var env = nunjucks.configure('views', {noCache: true});
 var app = express();
 const port = 3000;
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+app.set('view engine', 'html');
+app.engine('html', nunjucks.render);
+
+app.use(express.static('public'));
+app.use('/', routes);
 
 models.User.sync({})
 .then(function () {
@@ -23,8 +31,4 @@ models.User.sync({})
 })
 .catch(console.error);
 
-app.set('view engine', 'html');
-app.engine('html', nunjucks.render);
 
-app.use(express.static('public'));
-app.use('/', routes);

@@ -5,10 +5,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res, next){
-  console.log('in root')
-  res.send('got to GET /');
-  next();
+  res.redirect('/wiki');
+  // next();
 })
 router.use('/wiki', wikiRouter);
+// router.use('/user', userRouter);
 
 module.exports = router;
