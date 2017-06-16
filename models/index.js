@@ -10,7 +10,7 @@ var Page = db.define('page', {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-        	isUrl: true
+            isUrl: true
         }
     },
     content: {
@@ -21,10 +21,17 @@ var Page = db.define('page', {
         type: Sequelize.ENUM('open', 'closed')
     },
     date: {
-    	type: Sequelize.DATE,
-    	defaultValue: Sequelize.NOW
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
     }
-});
+}, {
+    getterMethods: {
+        route : function(){
+            return '/wiki/' + this.urlTitle;
+        }
+      }
+    }
+);
 
 var User = db.define('user', {
     name: {
